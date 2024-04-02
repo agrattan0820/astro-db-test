@@ -1,5 +1,9 @@
 ---
+import { db, Comment } from "astro:db";
 
+const comments = await db.select().from(Comment);
+
+console.log("COMMENTS", comments);
 ---
 
 <html lang="en">
