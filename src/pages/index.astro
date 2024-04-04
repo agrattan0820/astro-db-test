@@ -1,7 +1,7 @@
 ---
-import { db, Comment } from "astro:db";
+import { db, Comments } from "astro:db";
 
-const comments = await db.select().from(Comment);
+const comments = await db.select().from(Comments);
 
 console.log("COMMENTS", comments);
 ---
