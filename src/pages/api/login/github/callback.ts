@@ -1,5 +1,5 @@
 import { Users, db, eq } from "astro:db";
-import { github, lucia } from "../../../lib/auth";
+import { github, lucia } from "../../../../lib/auth";
 import { OAuth2RequestError } from "arctic";
 import { generateId } from "lucia";
 
@@ -17,6 +17,7 @@ export async function GET(context: APIContext): Promise<Response> {
 
   try {
     const tokens = await github.validateAuthorizationCode(code);
+
     const githubUserResponse = await fetch("https://api.github.com/user", {
       headers: {
         Authorization: `Bearer ${tokens.accessToken}`,
@@ -44,6 +45,7 @@ export async function GET(context: APIContext): Promise<Response> {
     const userId = generateId(15);
 
     await db.insert(Users).values({
+      id: userId,
       githubId: githubUser.id,
       username: githubUser.login,
     });
@@ -57,6 +59,7 @@ export async function GET(context: APIContext): Promise<Response> {
     );
     return context.redirect("/");
   } catch (e) {
+    console.error(e);
     // the specific error message depends on the provider
     if (e instanceof OAuth2RequestError) {
       // invalid code

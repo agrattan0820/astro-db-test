@@ -11,7 +11,7 @@ export const Users = defineTable({
 });
 export const Sessions = defineTable({
   columns: {
-    id: column.number({ primaryKey: true }),
+    id: column.text({ primaryKey: true }),
     userId: column.text({ references: () => Users.columns.id }),
     expiresAt: column.number(),
   },

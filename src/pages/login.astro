@@ -1,10 +1,11 @@
 ---
-const user = Astro.locals.user;
-if (!user) {
-  return Astro.redirect("/login");
-}
+import { db, Comments, Users } from "astro:db";
 
-const username = user.username;
+const users = await db.select().from(Users);
+const comments = await db.select().from(Comments);
+
+console.log("USERS", users);
+console.log("COMMENTS", comments);
 ---
 
 <html lang="en">
@@ -16,9 +17,7 @@ const username = user.username;
     <title>Astro</title>
   </head>
   <body>
-    <h1>Welcome {username}!</h1>
-    <form method="post" action="/api/logout">
-      <button>Sign out</button>
-    </form>
+    <h1>Sign in</h1>
+    <a href="/api/login/github">Sign in with GitHub</a>
   </body>
 </html>

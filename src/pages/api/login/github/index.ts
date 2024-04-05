@@ -1,5 +1,5 @@
 import { generateState } from "arctic";
-import { github } from "../../../lib/auth";
+import { github } from "../../../../lib/auth";
 
 import type { APIContext } from "astro";
 
