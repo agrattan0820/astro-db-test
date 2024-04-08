@@ -1,16 +1,17 @@
 import db from "@astrojs/db";
 import { defineConfig } from "astro/config";
-
 import vercel from "@astrojs/vercel/serverless";
+
+import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [db()],
+  integrations: [db(), tailwind()],
   output: "server",
   vite: {
     optimizeDeps: {
-      exclude: ["oslo"],
-    },
+      exclude: ["oslo"]
+    }
   },
-  adapter: vercel(),
+  adapter: vercel()
 });
