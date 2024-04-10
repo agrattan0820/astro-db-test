@@ -26,6 +26,7 @@ const username = user.username;
 
 <script>
   import * as d3 from "d3";
+  import pizzaData from "../data/pizza.json";
 
   const container = document.querySelector("#chart");
 
@@ -37,14 +38,15 @@ const username = user.username;
   const marginLeft = 40;
 
   const x = d3
-    .scaleTime()
-    .domain([new Date(1990, 0, 1), new Date(2020, 0, 1)])
-    .range([marginLeft, width - marginRight]);
+    .scaleBand()
+    .domain(pizzaData.map((d) => d.day_of_week))
+    .range([marginLeft, width - marginRight])
+    .padding(0.1);
 
   // Declare the y (vertical position) scale.
   const y = d3
     .scaleLinear()
-    .domain([0, 5000])
+    .domain([0, d3.max(pizzaData, (d) => d.orders)!])
     .range([height - marginBottom, marginTop]);
 
   // Create the SVG container.
@@ -52,6 +54,17 @@ const username = user.username;
     .create("svg")
     .attr("viewBox", `0 0 ${width} ${height}`)
     .attr("class", "w-full");
+
+  svg
+    .append("g")
+    .attr("fill", "steelblue")
+    .selectAll()
+    .data(pizzaData)
+    .join("rect")
+    .attr("x", (d) => x(d.day_of_week)!)
+    .attr("y", (d) => y(d.orders))
+    .attr("height", (d) => y(0) - y(d.orders))
+    .attr("width", x.bandwidth());
 
   // Add the x-axis.
   svg
