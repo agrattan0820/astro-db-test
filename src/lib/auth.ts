@@ -8,13 +8,13 @@ import { Sessions, Users } from "../../db/tables";
 
 export const github = new GitHub(
   import.meta.env.GITHUB_CLIENT_ID,
-  import.meta.env.GITHUB_CLIENT_SECRET
+  import.meta.env.GITHUB_CLIENT_SECRET,
 );
 
 const adapter = new DrizzleSQLiteAdapter(
   db as any,
   asDrizzleTable("Sessions", Sessions as any) as any,
-  asDrizzleTable("Users", Users as any) as any
+  asDrizzleTable("Users", Users as any) as any,
 );
 
 export const lucia = new Lucia(adapter, {
