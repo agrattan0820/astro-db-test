@@ -9,11 +9,12 @@ export const Users = defineTable({
     githubId: column.text({ unique: true }),
   },
 });
+
 export const Sessions = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
     userId: column.text({ references: () => Users.columns.id }),
-    expiresAt: column.number(),
+    expiresAt: column.date(),
   },
 });
 
