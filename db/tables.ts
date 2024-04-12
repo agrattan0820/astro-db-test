@@ -8,6 +8,7 @@ export const Users = defineTable({
     username: column.text(),
     githubId: column.text({ unique: true }),
   },
+  deprecated: true,
 });
 export const Sessions = defineTable({
   columns: {
